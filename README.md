@@ -11,4 +11,5 @@
 - Copy the Generator folder in your preferred local directory.
 
 To learn about TRAILS mobility model you can read the file project.pdf or the paper "TRAILS - A Trace-Based Probabilistic Mobility Model" (https://dl.acm.org/citation.cfm?id=3242134)
-In order to generate TRAILS graphs and simulate them, you can read the Implementation chapter of the document project.pdf
+
+In order to generate TRAILS graphs and simulate them, read the Implementation chapter of the document project.pdf
