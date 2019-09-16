@@ -8,5 +8,5 @@ simple Coordinator
     //mode = 2 Transform to a bidirectional path only if there is no way to return
     bool includeUnrealistic = default(false);	//Include unrealistic paths
     bool enable = default(true);				//Enable coordinator functionality
-    @display("i=status/yellow");
+    @display("i=status/yellow;is=n");
 }
