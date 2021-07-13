@@ -49,7 +49,7 @@ def filterPointsDistance(user,maxDistance):
     x=[];
     y=[];  
     time=[];
-    for i in xrange(0,len(user.x)):
+    for i in range(0,len(user.x)):
         if i==0:
             if len(user.x)>1:
                 dx=abs(user.x[i]-user.x[i+1]);
@@ -110,7 +110,7 @@ def filterPointsSpeed(user,maxSpeed):
     x=[];
     y=[];
     time=[];
-    for i in xrange(0,len(user.x)):
+    for i in range(0,len(user.x)):
         if i==0:
             if len(user.x)>1:
                 ds=derivative(user.x[i],user.y[i],user.time[i],user.x[i+1],user.y[i+1],user.time[i+1]); #Future
@@ -169,7 +169,7 @@ def mergePoints(users,resolution):
         if resolution>0:
             resolution=1.0*resolution;
             for user in users:
-                for i in xrange(0,len(user.x)):
+                for i in range(0,len(user.x)):
                     if resolution != 1:
                         user.x[i]=round(user.x[i]/resolution)*resolution;
                         user.y[i]=round(user.y[i]/resolution)*resolution;
@@ -180,7 +180,7 @@ def mergePoints(users,resolution):
         newX=[user.x[0]];
         newY=[user.y[0]];
         newTime=[user.time[0]];
-        for i in xrange(1,len(user.x)-1):
+        for i in range(1,len(user.x)-1):
             if (user.x[i] != user.x[i-1] or user.x[i] != user.x[i+1] or 
                 user.y[i] != user.y[i-1] or user.y[i] != user.y[i+1]):      
                 newX.append(user.x[i]);

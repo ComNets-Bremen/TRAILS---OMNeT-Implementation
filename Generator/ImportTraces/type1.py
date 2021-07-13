@@ -1,6 +1,6 @@
 #Functions to import traces of a specific format
 #https://crawdad.org/epfl/main/20090224/
-import users as u   #Functions to process traces
+from ImportTraces import users as u    #Functions to process traces
 import os           #Functions to create directories
 import csv          #Functions to create csv tables
 

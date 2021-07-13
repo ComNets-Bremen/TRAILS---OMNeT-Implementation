@@ -1,6 +1,6 @@
 #Functions to import traces of a specific format
 #https://crawdad.org/roma/taxi/20140717/taxicabs/
-import users as u   #Functions to process traces
+from ImportTraces import users as u    #Functions to process traces
 import re           #Functions to parse strings
 import csv          #Functions to create csv tables
 import datetime     #Funtion to work with time-stamps
@@ -29,7 +29,7 @@ def getPosition(Pstr):
 #        Input
 #    inFile: Input file where the traces are described
 def importUsers(inFile):
-    reader = csv.reader(open(inFile, "rb"), delimiter=';');
+    reader = csv.reader(open(inFile, "r"), delimiter=';');
     a = list(reader);
     timeAll = [getTime(l[1]) for l in a];
     position = [getPosition(l[2]) for l in a];
@@ -38,8 +38,8 @@ def importUsers(inFile):
     yAll = [float(pos[0]) for pos in position]; #latitude
     xAll = [float(pos[1]) for pos in position]; #logitude
     del(position);
-    users = [u.User([],[],[]) for i in xrange(0,max(userIndex)+1)];
-    for i in xrange(0,len(userIndex)):
+    users = [u.User([],[],[]) for i in range(0,max(userIndex)+1)];
+    for i in range(0,len(userIndex)):
         users[userIndex[i]].time.append(timeAll[i]);
         users[userIndex[i]].x.append(xAll[i]);
         users[userIndex[i]].y.append(yAll[i]);

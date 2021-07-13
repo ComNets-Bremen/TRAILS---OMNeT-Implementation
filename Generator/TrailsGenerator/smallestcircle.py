@@ -1,7 +1,7 @@
 #Group objects by the Smallest enclosing circle
 #Library Based on Smallest enclosing circle impementation of Project Nayuki 
 #https://www.nayuki.io/page/smallest-enclosing-circle
-import objects as o         #Objets used as structures for the TRAILS graph generator
+from TrailsGenerator import objects as o         #Objets used as structures for the TRAILS graph generator
 
 _MULTIPLICATIVE_EPSILON = 1+1e-14;  #Constant to find points in the border of a circle
 
@@ -172,7 +172,7 @@ def getSTP(user,index,SRe,Sre,TR):
     points=[firstPoint];
     box=o.Box(user.x[index],user.y[index],user.x[index],user.y[index]);
     circle=o.Circle(user.x[index],user.y[index],0.0);
-    for i in xrange(index+1,len(user.time)):
+    for i in range(index+1,len(user.time)):
         point=o.Point(user.x[i],user.y[i]);
         newBox=getBoundingBox(box,point);
         merge=False;
@@ -184,7 +184,7 @@ def getSTP(user,index,SRe,Sre,TR):
         else:
             stayTime=user.time[pointsIndex[-1]]-user.time[pointsIndex[0]];
             if stayTime >= TR:
-                stp=o.STP(user,pointsIndex,stayTime);
+                stp=o.STP(user,pointsIndex,user.time[pointsIndex[0]],user.time[pointsIndex[-1]]);
                 stp.px=circle.centerX;
                 stp.py=circle.centerY;
                 return stp;

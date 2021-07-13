@@ -44,7 +44,7 @@ def transformDegreesMeters(users):
     minX=min([min(user.x) for user in users]);
     minY=min([min(user.y) for user in users]);
     for user in users:
-        for i in xrange(0,len(user.x)):
+        for i in range(0,len(user.x)):
             user.x[i]=haversine(minX, user.y[i], user.x[i], user.y[i]);
             user.y[i]=haversine(user.x[i], minY, user.x[i], user.y[i]);
 
@@ -74,10 +74,10 @@ def exportUsers(outFolder,users):
     tracesPath = outFolder+'/Traces';
     if not os.path.exists(tracesPath):
         os.makedirs(tracesPath);
-    for i in xrange(0,len(users)):
-        with open(tracesPath+'/'+str(i)+'.csv', 'wb') as f:
+    for i in range(0,len(users)):
+        with open(tracesPath+'/'+str(i)+'.csv', 'w') as f:
             writer = csv.writer(f, delimiter ='\t');
-            for j in xrange(0,len(users[i].x)):
+            for j in range(0,len(users[i].x)):
                 writer.writerow([users[i].time[j],users[i].x[j],users[i].y[j]]);
 
 #Plot a Traces graph and save it as pdf

@@ -1,5 +1,5 @@
 #Creates paths between locations
-import objects as o             #Objets used as structures for the TRAILS graph generator
+from TrailsGenerator import objects as o             #Objets used as structures for the TRAILS graph generator
 from Compare import comd as c   #Comparisson of multiple distances algorithim
 
 #Find out if a path is an unrealistic path
@@ -13,7 +13,7 @@ def isUnknown(link,BDe):
     ty=[y for y in link.y];
     ty.insert(0,link.initialPOI.py);
     ty.append(link.finalPOI.py);
-    for i in xrange(1,len(tx)):
+    for i in range(1,len(tx)):
         dx=abs(tx[i]-tx[i-1]);
         dy=abs(ty[i]-ty[i-1]);
         if not c.isInRange(dx,dy,BDe):
@@ -30,7 +30,7 @@ def findUnknown(links,BDe):
         link.unrealistic=isUnknown(link,BDe);
         if link.unrealistic:
             a+=1;
-    print "Unrealistic links="+str(a);
+    print("Unrealistic links="+str(a))
 
 #Compute time intrvals between consecutive time stamps
 #        Input
@@ -38,7 +38,7 @@ def findUnknown(links,BDe):
 #        Output
 #    deltaTime: List of time intervals
 def getDeltaTime(time):
-    deltaTime=[time[i+1]-time[i] for i in xrange(0,len(time)-1)];
+    deltaTime=[time[i+1]-time[i] for i in range(0,len(time)-1)];
     return deltaTime;
 
 #Get input and output ports for each POI
@@ -62,14 +62,18 @@ def getLinks(users,POIs):
     for user in users:       
         outputIndexes=[index for index in range(len(user.outputPort)) if user.outputPort[index] is not None];
         inputIndexes=[index for index in range(len(user.inputPort)) if user.inputPort[index] is not None];
-        for i in xrange(0,len(outputIndexes)-1):
+        for i in range(0,len(outputIndexes)-1):
             x=user.x[outputIndexes[i]+1:inputIndexes[i+1]];
             y=user.y[outputIndexes[i]+1:inputIndexes[i+1]];
             finalPOI=user.inputPort[inputIndexes[i+1]];
             initialPOI=user.outputPort[outputIndexes[i]];
             deltaTime=getDeltaTime(user.time[outputIndexes[i]:inputIndexes[i+1]+1]);
-            link=o.Link(x,y,deltaTime,finalPOI,initialPOI,False,False,False);
+            totalTime=user.time[inputIndexes[i+1]]-user.time[outputIndexes[i]];
+            link=o.Link(x,y,deltaTime,totalTime,finalPOI,initialPOI);
+            initialPOI.links.append(link);
+            link.enterTime=user.time[outputIndexes[i]];
             links.append(link);
+    links.sort(key=lambda link:link.enterTime);
     return links;
 
 #Clasify links unrealistic
@@ -99,6 +103,6 @@ def getConnectedPOIs(links):
             link.finalPOI.pIndex=i;
             newPOIs.append(link.finalPOI);
             i+=1;
-    print 'POIs with paths='+str(i);
+    print('POIs with paths='+str(i))
     return newPOIs;
     

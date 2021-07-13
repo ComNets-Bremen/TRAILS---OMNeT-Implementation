@@ -3,6 +3,7 @@ from ImportTraces import users as us            #Functions to process traces
 from ImportTraces import type0 as ut0           #Functions to import traces of a specific format
 from ImportTraces import type1 as ut1           #Functions to import traces of a specific format
 from ImportTraces import type2 as ut2           #Functions to import traces of a specific format
+from ImportTraces import type3 as ut3           #Functions to import traces of a specific format
 from ImportTraces import tracefilter as tf      #Detects and removes undesired trace-points
 from TrailsGenerator import trails as tg        #Functions to generate TRAILS graphs
 from TrailsGenerator import classification as c #Functions to generate TRAILS graphs
@@ -49,8 +50,13 @@ def processTraces(inOutF,traceP):
         users = ut0.importUsers(inOutF.inFolder);
     elif traceP.traceType==1:
         users = ut1.importUsers(inOutF.inFolder);
-    else:
+    elif traceP.traceType==2:
         users = ut2.importUsers(inOutF.inFolder);
+    elif traceP.traceType==3:
+        users = ut3.importUsers(inOutF.inFolder)
+    else:
+        raise ValueError("Unknown type of traces")
+    
     tf.mergePoints(users,traceP.resolution);
     users=tf.cleanPoints(users,traceP.MaxV,traceP.MaxD);
     limits = us.removeOffset(users);
@@ -73,24 +79,12 @@ def generationTRAILS(inOutF,trailsP):
     maxXs=max([max(user.x) for user in users]);
     maxYs=max([max(user.y) for user in users]);
     POIs,links=tg.getTrails(users,trailsP.SR,trailsP.TR,trailsP.MinU,maxXs,maxYs);
+    c.classifyPaths(POIs);
     tg.exportTrails(inOutF.outFolder,POIs,links);
+    tg.printMeanStats(links,POIs)
     stop = timeit.default_timer();
     print("Time to generate the TRAILS graph(s)=" + str(stop - start));
     
-#Classify links
-#Classify links and export TRAILS
-#        Input
-#    inOutF: Input and output directories
-#    recursion: If it is 0 or none it is the size of POIs 
-def returnLinks(inOutF,recursion):
-    start = timeit.default_timer();
-    POIs=tg.importPOIs(inOutF.inFolder);
-    tg.importLinks(inOutF.inFolder,POIs);
-    c.classifyPaths(POIs,recursion);
-    tg.exportSmartTrails(inOutF.outFolder,POIs);
-    stop = timeit.default_timer();
-    print("Time to generate the TRAILS graph(s)=" + str(stop - start));
-
 #Plot traces
 #        Input
 #    inOutF: Input and output directories

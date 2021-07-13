@@ -1,6 +1,6 @@
 #Functions to extract locations from traces
-import objects as o             #Objets used as structures for the TRAILS graph generator
-import smallestcircle as c      #Group objects by the Smallest enclosing cicle
+from TrailsGenerator import objects as o             #Objets used as structures for the TRAILS graph generator
+from TrailsGenerator import smallestcircle as c      #Group objects by the Smallest enclosing cicle
 from Compare import comd as d   #Comparisson of multiple distances algorithim
 import math as m                #Mathematic functions
 
@@ -15,7 +15,7 @@ import math as m                #Mathematic functions
 #    POI: Point of interest
 def findSTP(index,user,poi,Sre,TR):
     pointsIndex=[index];
-    for j in xrange(index,len(user.x)):
+    for j in range(index,len(user.x)):
         point=o.Point(user.x[j],user.y[j]);
         dx=abs(poi.px-point.x);
         dy=abs(poi.py-point.y);
@@ -24,7 +24,7 @@ def findSTP(index,user,poi,Sre,TR):
         else:
             stayTime=user.time[pointsIndex[-1]]-user.time[pointsIndex[0]];
             if stayTime >= TR:
-                return o.STP(user,pointsIndex,stayTime);
+                return o.STP(user,pointsIndex,user.time[pointsIndex[0]],user.time[pointsIndex[-1]]);
             else:
                 return None;            
     return None
@@ -47,8 +47,8 @@ def findPOI(index,user,grid,Sre,TR):
     highI=i+1 if i<len(grid)-1 else len(grid)-1;
     lowJ=j-1 if j>0 else 0;
     highJ=j+1 if j<len(grid[i])-1 else len(grid[i])-1;
-    for I in xrange(lowI,highI+1):
-        for J in xrange(lowJ,highJ+1):       
+    for I in range(lowI,highI+1):
+        for J in range(lowJ,highJ+1):       
             for poi in grid[I][J]:
                 stp=findSTP(index,user,poi,Sre,TR);
                 if stp != None:
@@ -83,7 +83,7 @@ def createPOI(grid,POIs,Sre,stp):
 #    stp: Set of consecutive trace-points
 #    iopt: Index of point whe time between point[index] is bigger than TR
 def getPOI(index,iopt,TR,user,grid,Sre,lenUser):
-    for i in xrange(index,lenUser):
+    for i in range(index,lenUser):
         if i>iopt:
             return None;
         stp=findPOI(i,user,grid,Sre,TR);
@@ -103,7 +103,7 @@ def createGrid(maxX,maxY,Sre):
     resolution=Sre.range;
     xResolution=int(m.floor(maxX/resolution))+1;
     yResolution=int(m.floor(maxY/resolution))+1;
-    grid=[[[] for j in xrange(0,yResolution)] for i in xrange(0,xResolution)];
+    grid=[[[] for j in range(0,yResolution)] for i in range(0,xResolution)];
     return grid;
 
 #Generate TRAILS locations from traces
@@ -132,5 +132,5 @@ def extractPOIs(users,SRe,Sre,TR,maxX,maxY):
                     createPOI(grid,POIs,Sre,nSTP);
                     index=nSTP.pointsIndex[-1];
             index+=1;
-    print 'Extracted POIs='+str(len(POIs));
+    print('Extracted POIs='+str(len(POIs)))
     return POIs;

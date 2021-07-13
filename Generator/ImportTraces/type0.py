@@ -1,8 +1,8 @@
 #Functions to import traces of a specific format
 #https://crawdad.org/ncsu/mobilitymodels/20090723/    With delimeter '\t'
-import users as u   #Functions to process traces
+from ImportTraces import users as u   #Functions to process traces
 import csv          #Functions to create csv tables
-import os           #Functions to create directories
+import os           #Functions to navigate through directories
 
 #Process to import one user trace
 #        Input
@@ -13,7 +13,7 @@ def importUser(inFolder, **keyword_parameters):
         csvdelimeter = keyword_parameters['delimeter'];
     else:
         csvdelimeter = '\t';
-    reader = csv.reader(open(inFolder, "rb"), delimiter=csvdelimeter);
+    reader = csv.reader(open(inFolder, "r"), delimiter=csvdelimeter);
     a = list(reader);
     time = [float(l[0]) for l in a];
     x = [float(l[1]) for l in a];
