@@ -14,20 +14,19 @@ using namespace std;
 namespace inet {
     class INET_API TRAILS : public LineSegmentsMobilityBase{
       protected:
-        virtual void setInitialPosition() override;     //Get an initial random poi
+        int count; /*Number of trace point in a link*/
+        Coordinator *trailsFunctions; /*pointer to Coordinator module*/
+        sPOI_t *pPOI; /*pointer to current POI*/
+        sInstruction_t currentInstruction; /*Instruction received from the Coordinator module*/
+        virtual void setInitialPosition() override;
         virtual int numInitStages() const override { return NUM_INIT_STAGES; }
-        virtual void initialize(int stage) override;    //Start communication with the coordinator
-        virtual void setTargetPosition() override;      //Go to the next position or ask to the coordinator next instruction
+        virtual void initialize(int stage) override;
+        virtual void setTargetPosition() override;
         virtual void move() override;
-        int count;
-        Coordinator *trailsFunctions;
-        void* pPOI;
-        sLink_t* pLink;
-        sInstruction_t currentInstruction;
       public:
         TRAILS();
     };
-} // namespace inet
+}
 
-#endif // ifndef __INET_RANDOMWPMOBILITY_H
+#endif
 
