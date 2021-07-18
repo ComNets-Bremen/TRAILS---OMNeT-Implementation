@@ -9,4 +9,4 @@
 - Copy the content of the Simulator folder from the project with your INET framework.
 - Copy the Generator folder in your preferred local directory.
 
-To learn how to use TRAILS you can check our [wiki](https://github.com/ComNets-Bremen/TRAILS---OMNeT-Implementation/wiki)
+To learn how to use TRAILS you can check our [wiki](https://github.com/ComNets-Bremen/TRAILS---OMNeT-Implementation/wiki).
