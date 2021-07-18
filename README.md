@@ -1,8 +1,7 @@
 # TRAILS
 ## Requirements
-- Python2.7
-- Matplotlib
-- Numpy
+- Python3
+- Scipy
 - Omnet++ 5.4.1
 - INET 4.0.0
 
